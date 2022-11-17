@@ -11,28 +11,29 @@ from plot_functions import histo_hori, histo_multicomp, plot_all_matter
 import pandas as pd
 import xlsxwriter
 from collections import OrderedDict
+from perso_path import perso_path_string
 
 
-perso_path = "D:/EPL/MASTER/TFE/alcoolique/Analyse/" # "/CECI/proj/pilab/PermeableAccess/alcoolique_TnB32xGDr7h/Analyse/Excel/"  
+perso_path, excel_path, subjects_path, patients_path, plot_path, atlas_path = perso_path_string() 
 
 
 def analyse_excel_ttest_DTI(file_path, seuil, display, save):
     
     """
-    Parameters
-    ----------
-    file_path : String 
-        File path of the Excel with the results of the t-test for the concerned model, here DTI.
-    seuil : Int
-        Threshold above which you wish to display the zones.
-    display : Boolean
-        To show the plot.
-    save : Boolean
-        To save the plot.
-
-    Returns
-    -------
-    None. 
+        Parameters
+        ----------
+        file_path : String 
+            File path of the Excel with the results of the t-test for the concerned model, here DTI.
+        seuil : Int
+            Threshold above which you wish to display the zones.
+        display : Boolean
+            To show the plot.
+        save : Boolean
+            To save the plot.
+    
+        Returns
+        -------
+        None. 
     """
     
     means_all_FA = []
@@ -48,6 +49,7 @@ def analyse_excel_ttest_DTI(file_path, seuil, display, save):
     colors_all_AD = []
     colors_all_MD = []
     colors_all_RD = []
+    
     for cluster_nb in range(3):
         worksheet = pd.read_excel(file_path, sheet_name = "Cluster " + str(cluster_nb))
         worksheet = worksheet.to_numpy()
@@ -94,6 +96,7 @@ def analyse_excel_ttest_DTI(file_path, seuil, display, save):
                 if(np.isnan(FA_changes_pos[j,1]) == True):
                     FA_changes_pos = FA_changes_pos[:j,:]
                     break
+                
             FA_changes = np.append(FA_changes_neg,FA_changes_pos,axis=0)
             FA_changes = FA_changes[abs(FA_changes[:,1]) > seuil]
             
@@ -125,6 +128,7 @@ def analyse_excel_ttest_DTI(file_path, seuil, display, save):
                 if(np.isnan(AD_changes_pos[j,1]) == True):
                     AD_changes_pos = AD_changes_pos[:j,:]
                     break
+                
             AD_changes = np.append(AD_changes_neg,AD_changes_pos,axis=0)
             AD_changes = AD_changes[abs(AD_changes[:,1]) > seuil]
                 
@@ -169,6 +173,7 @@ def analyse_excel_ttest_DTI(file_path, seuil, display, save):
             colors_MD += int(len(MD_changes[:,1])) * col
             colors_AD += int(len(AD_changes[:,1])) * col
             colors_RD += int(len(RD_changes[:,1])) * col
+            
         if(display == True) :   
             # FA   
             if(len(FA_all_means) > 20):
@@ -343,24 +348,24 @@ def analyse_excel_ttest_DTI(file_path, seuil, display, save):
 def analyse_excel_ttest_MULTICOMP(file_path, seuil, model, metric, display, save):
     
     """
-    Parameters
-    ----------
-    file_path : String 
-        File path of the Excel with the results of the t-test for the concerned model, here NODDI, DIAMOND or MF.
-    seuil : Int
-        Threshold above which you wish to display the zones.
-    model : String
-        Name of the model.
-    metric : List of string
-        List of the metrics to be displayed.
-    display : Boolean
-        To show the plot.
-    save : Boolean
-        To save the plot.
-
-    Returns
-    -------
-    None. 
+        Parameters
+        ----------
+        file_path : String 
+            File path of the Excel with the results of the t-test for the concerned model, here NODDI, DIAMOND or MF.
+        seuil : Int
+            Threshold above which you wish to display the zones.
+        model : String
+            Name of the model.
+        metric : List of string
+            List of the metrics to be displayed.
+        display : Boolean
+            To show the plot.
+        save : Boolean
+            To save the plot.
+    
+        Returns
+        -------
+        None. 
     """
     
     means_all_wm = []
@@ -403,6 +408,7 @@ def analyse_excel_ttest_MULTICOMP(file_path, seuil, model, metric, display, save
                     if(np.isnan(changes_pos[j,1])==True):
                         changes_pos = changes_pos[:j,:]
                         break
+                    
                 metric_changes = np.append(changes_neg,changes_pos,axis=0)
                 metric_changes = metric_changes[abs(metric_changes[:,1])>seuil]
 
@@ -513,21 +519,21 @@ def analyse_excel_ttest_MULTICOMP(file_path, seuil, model, metric, display, save
 def coherence(model, type_matter, seuil, file_path):
     
     """
-    Parameters
-    ----------
-    model : String
-        Name of the model.
-    type_matter : List of string 
-        List of the different types of matter.
-    seuil : Int
-        Threshold above which you wish to display the zones.
-    file_path : String 
-        File path of the Excel with the results of the t-test for the concerned model, here DTI.
-
-    Returns
-    -------
-    atlas_name_all : List 3 lists of string (one by clusters)
-        List of all atlases showing a percentage of change higher in absolute value than the seuil.
+        Parameters
+        ----------
+        model : String
+            Name of the model.
+        type_matter : List of string 
+            List of the different types of matter.
+        seuil : Int
+            Threshold above which you wish to display the zones.
+        file_path : String 
+            File path of the Excel with the results of the t-test for the concerned model, here DTI.
+    
+        Returns
+        -------
+        atlas_name_all : List 3 lists of string (one by clusters)
+            List of all atlases showing a percentage of change higher in absolute value than the seuil.
     """
     
     cluster_name = ["Cluster 0", "Cluster 1", "Cluster 2"]
@@ -585,22 +591,23 @@ def coherence(model, type_matter, seuil, file_path):
     return atlas_name_all
                 
 def coherencebis(fa_or_csf, type_matter, seuil, file_paths):
+    
     """
-    Parameters
-    ----------
-    fa_or_csf : String
-        To choose the "model" in order to analyse a specific part of the coherence.
-    type_matter : List of string 
-        List of the different types of matter.
-    seuil : Int
-        Threshold above which you wish to display the zones.
-    file_path : String 
-        File path of the Excel with the results of the t-test for the concerned model, here DTI.
-
-    Returns
-    -------
-    atlas_name_all_all : List 3 lists of string (one by clusters)
-        List of all atlases showing a percentage of change higher in absolute value than the seuil.
+        Parameters
+        ----------
+        fa_or_csf : String
+            To choose the "model" in order to analyse a specific part of the coherence.
+        type_matter : List of string 
+            List of the different types of matter.
+        seuil : Int
+            Threshold above which you wish to display the zones.
+        file_path : String 
+            File path of the Excel with the results of the t-test for the concerned model, here DTI.
+    
+        Returns
+        -------
+        atlas_name_all_all : List 3 lists of string (one by clusters)
+            List of all atlases showing a percentage of change higher in absolute value than the seuil.
     """
     
     cluster_name = ["Cluster 0", "Cluster 1", "Cluster 2"]
@@ -679,76 +686,83 @@ def coherencebis(fa_or_csf, type_matter, seuil, file_paths):
 def excel_patient_to_clust(clusters, model):
     
     """
-    Parameters
-    ----------
-    clusters : clusters : List of list 
-        List containing the lists of the different clusters.
-    model : String
-        Name of the model.
-
-    Returns
-    -------
-    None. Creation of an Excel file. 
+        Parameters
+        ----------
+        clusters : clusters : List of list 
+            List containing the lists of the different clusters.
+        model : String
+            Name of the model.
+    
+        Returns
+        -------
+        None. Creation of an Excel file. 
     """
     
     cluster_names = ["Cluster 0", "Cluster 1", "Cluster 2"]
     path = []
     if (model == "DTI"):         
-        path.append(perso_path + "Mean_ROI_FA.xlsx")
-        path.append(perso_path + "Mean_ROI_MD.xlsx")
-        path.append(perso_path + "Mean_ROI_AD.xlsx")
-        path.append(perso_path + "Mean_ROI_RD.xlsx")
+        path.append(excel_path + "Mean_ROI_FA.xlsx")
+        path.append(excel_path + "Mean_ROI_MD.xlsx")
+        path.append(excel_path + "Mean_ROI_AD.xlsx")
+        path.append(excel_path + "Mean_ROI_RD.xlsx")
     
     elif (model == "NODDI"):  
-        path.append(perso_path + "Mean_ROI_noddi_fintra.xlsx")
-        path.append(perso_path + "Mean_ROI_noddi_fextra.xlsx")
-        path.append(perso_path + "Mean_ROI_noddi_fiso.xlsx")
-        path.append(perso_path + "Mean_ROI_noddi_odi.xlsx")
+        path.append(excel_path + "Mean_ROI_noddi_fintra.xlsx")
+        path.append(excel_path + "Mean_ROI_noddi_fextra.xlsx")
+        path.append(excel_path + "Mean_ROI_noddi_fiso.xlsx")
+        path.append(excel_path + "Mean_ROI_noddi_odi.xlsx")
 
     elif (model == "DIAMOND1"):
-        path.append(perso_path + "Mean_ROI_wFA.xlsx")
-        path.append(perso_path + "Mean_ROI_wMD.xlsx")
-        path.append(perso_path + "Mean_ROI_wAD.xlsx")
-        path.append(perso_path + "Mean_ROI_wRD.xlsx")
+        path.append(excel_path + "Mean_ROI_wFA.xlsx")
+        path.append(excel_path + "Mean_ROI_wMD.xlsx")
+        path.append(excel_path + "Mean_ROI_wAD.xlsx")
+        path.append(excel_path + "Mean_ROI_wRD.xlsx")
         
     elif (model == "DIAMOND2"):
-        path.append(perso_path + "Mean_ROI_diamond_fractions_csf.xlsx")
-        path.append(perso_path + "Mean_ROI_diamond_fractions_ftot.xlsx")
+        path.append(excel_path + "Mean_ROI_diamond_fractions_csf.xlsx")
+        path.append(excel_path + "Mean_ROI_diamond_fractions_ftot.xlsx")
         
     elif (model == "DIAMOND"):
-        path.append(perso_path + "Mean_ROI_wFA.xlsx")
-        path.append(perso_path + "Mean_ROI_wMD.xlsx")
-        path.append(perso_path + "Mean_ROI_wAD.xlsx")
-        path.append(perso_path + "Mean_ROI_wRD.xlsx")
-        path.append(perso_path + "Mean_ROI_diamond_fractions_csf.xlsx")
-        path.append(perso_path + "Mean_ROI_diamond_fractions_ftot.xlsx")
+        path.append(excel_path + "Mean_ROI_wFA.xlsx")
+        path.append(excel_path + "Mean_ROI_wMD.xlsx")
+        path.append(excel_path + "Mean_ROI_wAD.xlsx")
+        path.append(excel_path + "Mean_ROI_wRD.xlsx")
+        path.append(excel_path + "Mean_ROI_diamond_fractions_csf.xlsx")
+        path.append(excel_path + "Mean_ROI_diamond_fractions_ftot.xlsx")
         
     else: #MF
-        path.append(perso_path + "Mean_ROI_mf_frac_csf.xlsx")
-        path.append(perso_path + "Mean_ROI_mf_frac_ftot.xlsx")
-        path.append(perso_path + "Mean_ROI_mf_fvf_tot.xlsx")
-        path.append(perso_path + "Mean_ROI_mf_wfvf.xlsx")
+        path.append(excel_path + "Mean_ROI_mf_frac_csf.xlsx")
+        path.append(excel_path + "Mean_ROI_mf_frac_ftot.xlsx")
+        path.append(excel_path + "Mean_ROI_mf_fvf_tot.xlsx")
+        path.append(excel_path + "Mean_ROI_mf_wfvf.xlsx")
     
     for pat in path :
         new_name = pat
         new_name = new_name.replace('Mean_ROI_', 'Cluster_ROI_')
             
         workbook = xlsxwriter.Workbook(new_name)
-        for cluster,cluster_name in zip(clusters,cluster_names):
+        for cluster, cluster_name in zip(clusters, cluster_names):
             worksheet_new = workbook.add_worksheet(cluster_name)
             worksheet_new.write('A1', "Atlas")
             worksheet_new.write('B1', "Mean diff")
             worksheet_new.write('C1', "Percentage Change")
             big_sheet_percent = []
             big_sheet = []
+            
             for patient,i in zip(cluster,range(len(cluster))):
                 worksheet_read = pd.read_excel(pat, sheet_name=patient)
                 worksheet_read = worksheet_read.to_numpy()
                 if(i==0):
                     for atlas_name,k in zip(worksheet_read[:,0],range(2,len(worksheet_read[:,0])+2)):
                         worksheet_new.write('A'+str(k),atlas_name)
+                intermediate_val = np.zeros(len(worksheet_read[:,1]))
+                for valeur in range(len(worksheet_read[:,1])):
+                    if (worksheet_read[valeur,1] == 0):
+                        intermediate_val[valeur] = 0
+                    else:
+                        intermediate_val[valeur] = (worksheet_read[valeur,2]-worksheet_read[valeur,1])*100/worksheet_read[valeur,1]
                 
-                big_sheet_percent.append(worksheet_read[:,3])
+                big_sheet_percent.append(intermediate_val)
                 big_sheet.append((worksheet_read[:,2]-worksheet_read[:,1])*100)
             mean_sheet_percent = np.mean(big_sheet_percent,axis=0)
             mean_sheet_T1 = np.mean(big_sheet,axis=0)
@@ -761,15 +775,15 @@ def excel_patient_to_clust(clusters, model):
 def retirer_same(atlas_signif):
     
     """
-    Parameters
-    ----------
-    atlas_signif : List 3 lists of string (one by clusters) --> Resulting of coherencebis function.
-        List of all atlases showing a percentage of change higher in absolute value than the seuil.
-
-    Returns
-    -------
-    atlas_signif_corr : List of string
-        Corrected list = no more duplicates in the list.
+        Parameters
+        ----------
+        atlas_signif : List 3 lists of string (one by clusters) --> Resulting of coherencebis function.
+            List of all atlases showing a percentage of change higher in absolute value than the seuil.
+    
+        Returns
+        -------
+        atlas_signif_corr : List of string
+            Corrected list = no more duplicates in the list.
     """
     
     atlas_list = get_corr_atlas_list(get_atlas_list(onlywhite=True))
@@ -777,13 +791,11 @@ def retirer_same(atlas_signif):
     
     atlas_signif_corr = []
     for i in range(len(atlas_signif)):
-        # atlas_signif_correct = []
         if (atlas_signif[i][0] in atlas_name):
             atlas_signif_correct = atlas_signif[i][0]
         else:
             atlas_signif_correct = []
-        # atlas_signif_correct = atlas_signif[i][0]
-        
+   
         for j in range(1,len(atlas_signif[i])):
             if (atlas_signif[i][j] in atlas_signif_correct):
                 j += 1
@@ -798,30 +810,30 @@ def retirer_same(atlas_signif):
 def coherence_plot(model, atlas_signif, labels, percentage, display, save):
     
     """
-    Parameters
-    ----------
-    model : String
-        Name of the model.
-    atlas_signif : List 3 lists of string (one by clusters) --> Resulting of coherencebis function after correction and of coherence function.
-        List of all atlases showing a percentage of change higher in absolute value than the seuil.
-    labels : List of string
-        Name of the different metrics that appear in the plot.
-    percentage : Int
-        Threshold of the displayed areas.
-    display : Boolean
-        To show the plot.
-    save : Boolean
-        To save the plot.
-
-    Returns
-    -------
-    To be completed.
-    gather_metrics_all : TYPE
-        DESCRIPTION.
-    gather_metrics_diff_all : TYPE
-        DESCRIPTION.
-    atlas_signifi_all : TYPE
-        DESCRIPTION.
+        Parameters
+        ----------
+        model : String
+            Name of the model.
+        atlas_signif : List 3 lists of string (one by clusters) --> Resulting of coherencebis function after correction and of coherence function.
+            List of all atlases showing a percentage of change higher in absolute value than the seuil.
+        labels : List of string
+            Name of the different metrics that appear in the plot.
+        percentage : Int
+            Threshold of the displayed areas.
+        display : Boolean
+            To show the plot.
+        save : Boolean
+            To save the plot.
+    
+        Returns
+        -------
+        To be completed.
+        gather_metrics_all : TYPE
+            DESCRIPTION.
+        gather_metrics_diff_all : TYPE
+            DESCRIPTION.
+        atlas_signifi_all : TYPE
+            DESCRIPTION.
     """
     
     path = []
@@ -831,57 +843,60 @@ def coherence_plot(model, atlas_signif, labels, percentage, display, save):
     atlas_signifi_all = []
     
     if (model == "NODDI"):  
-        path.append(perso_path + "Cluster_ROI_noddi_fintra.xlsx")
-        path.append(perso_path + "Cluster_ROI_noddi_fextra.xlsx")
-        path.append(perso_path + "Cluster_ROI_noddi_fiso.xlsx")
+        path.append(excel_path + "Cluster_ROI_noddi_fintra.xlsx")
+        path.append(excel_path + "Cluster_ROI_noddi_fextra.xlsx")
+        path.append(excel_path + "Cluster_ROI_noddi_fiso.xlsx")
     
     elif (model == "DIAMOND1"):
-        path.append(perso_path + "Mean_ROI_wFA.xlsx")
-        path.append(perso_path + "Mean_ROI_wMD.xlsx")
-        path.append(perso_path + "Mean_ROI_wAD.xlsx")
-        path.append(perso_path + "Mean_ROI_wRD.xlsx")
+        path.append(excel_path + "Mean_ROI_wFA.xlsx")
+        path.append(excel_path + "Mean_ROI_wMD.xlsx")
+        path.append(excel_path + "Mean_ROI_wAD.xlsx")
+        path.append(excel_path + "Mean_ROI_wRD.xlsx")
     
     elif (model == "DIAMOND2"):
-        path.append(perso_path + "Cluster_ROI_diamond_fractions_csf.xlsx")
-        path.append(perso_path + "Cluster_ROI_diamond_fractions_ftot.xlsx")
+        path.append(excel_path + "Cluster_ROI_diamond_fractions_csf.xlsx")
+        path.append(excel_path + "Cluster_ROI_diamond_fractions_ftot.xlsx")
     
     elif (model == "MF"):
-        path.append(perso_path + "Cluster_ROI_mf_frac_csf.xlsx")
-        path.append(perso_path + "Cluster_ROI_mf_frac_ftot.xlsx")
+        path.append(excel_path + "Cluster_ROI_mf_frac_csf.xlsx")
+        path.append(excel_path + "Cluster_ROI_mf_frac_ftot.xlsx")
     
     elif (model == "CSF"):
-        path.append(perso_path + "Cluster_ROI_noddi_fiso.xlsx")
-        path.append(perso_path + "Cluster_ROI_diamond_fractions_csf.xlsx")
-        path.append(perso_path + "Cluster_ROI_mf_frac_csf.xlsx")
+        path.append(excel_path + "Cluster_ROI_noddi_fiso.xlsx")
+        path.append(excel_path + "Cluster_ROI_diamond_fractions_csf.xlsx")
+        path.append(excel_path + "Cluster_ROI_mf_frac_csf.xlsx")
     
     else : 
-        path.append(perso_path + "Cluster_ROI_FA.xlsx")
-        path.append(perso_path + "Cluster_ROI_noddi_odi.xlsx")
-        path.append(perso_path + "Cluster_ROI_wFA.xlsx")
+        path.append(excel_path + "Cluster_ROI_FA.xlsx")
+        path.append(excel_path + "Cluster_ROI_noddi_odi.xlsx")
+        path.append(excel_path + "Cluster_ROI_wFA.xlsx")
         
-    for cluster_name,cluster_num in zip(cluster_names,range(len(cluster_names))):
+    for cluster_name, cluster_num in zip(cluster_names, range(len(cluster_names))):
         if(model == "Combined"):
-            if (cluster_num==1):
-                atlas_signifi = [atlas_signif[cluster_num]]
+            if (cluster_num == 1):
+                atlas_signifi = np.sort(np.array(atlas_signif[cluster_num]).T)
             else:
                 atlas_signifi = np.sort(np.array(atlas_signif[cluster_num]).T)
         else: 
             atlas_signifi = np.sort(np.array(atlas_signif[cluster_num]).T)
-        
+
         gather_metrics = []
         gather_metrics_diff = []
+        
         for pat in path :
             worksheet = pd.read_excel(pat, sheet_name=cluster_name)
             worksheet = worksheet.to_numpy()
             percentage_signif = []
             diff_signif = []
+            
             for name,i in zip(worksheet[:,0], range(len(worksheet[:,0]))):
                 if (name in atlas_signifi):
                     percentage_signif = np.append(percentage_signif, worksheet[i,2])
                     diff_signif = np.append(diff_signif, worksheet[i,1])
+                    
             gather_metrics = np.append(gather_metrics, percentage_signif, axis=0)
             gather_metrics_diff = np.append(gather_metrics_diff, diff_signif, axis=0)
-            
+        
         gather_metrics = (np.reshape(gather_metrics, (len(path), len(atlas_signifi)))).T
         gather_metrics_all.append(gather_metrics)
         
@@ -906,8 +921,8 @@ def coherence_plot(model, atlas_signif, labels, percentage, display, save):
                 title2 = "["+model+"] - Metrics evolution (Coherence part2) - Cluster " + str(cluster_num)
                 namefig2 = "["+model+"] - Metrics evolution (Coherence part2) - Cluster " + str(cluster_num)
                 histo_multicomp(gather_metrics2, atlas_signifi2, namefig2, title2, labels, display, save)
-            else:
                 
+            else:
                 title = "["+model+"] - Metrics evolution (Coherence) - Cluster " + str(cluster_num)
                 namefig = "["+model+"] - Metrics evolution (Coherence) - Cluster " + str(cluster_num)
                 histo_multicomp(gather_metrics, atlas_signifi, namefig, title, labels, display, save)
@@ -950,26 +965,26 @@ clusters = [cluster0, cluster1, cluster2]
 # =============================================================================
 # CLUSTER EXCEL FILES (TO RUN ONE TIME)
 # =============================================================================
-excel_patient_to_clust(clusters, "NODDI")
 excel_patient_to_clust(clusters, "DTI")
+excel_patient_to_clust(clusters, "NODDI")
 excel_patient_to_clust(clusters, "DIAMOND")
 excel_patient_to_clust(clusters, "MF")
 
 # =============================================================================
 # INDIVIDUAL METRIC PLOTS 
 # =============================================================================
-analyse_excel_ttest_DTI(perso_path + "Results_ttest_DTI.xlsx", 8, True, False)
-analyse_excel_ttest_MULTICOMP(perso_path + "Results_ttest_NODDI.xlsx", 8, "NODDI", ["fintra", "fextra","fiso","odi"], True, False)
-analyse_excel_ttest_MULTICOMP(perso_path + "Results_ttest_DIAMOND1.xlsx", 8, "DIAMOND1", ["wFA", "wMD","wAD","wRD"], True, False)
-analyse_excel_ttest_MULTICOMP(perso_path + "Results_ttest_DIAMOND2.xlsx", 8, "DIAMOND2", ["frac_csf", "frac_ftot"], True, False)
-analyse_excel_ttest_MULTICOMP(perso_path + "Results_ttest_MF.xlsx", 8, "MF", ["frac_csf", "frac_ftot", "fvf_tot", "wfvf"], True, False)
+analyse_excel_ttest_DTI(excel_path + "Results_ttest_DTI.xlsx", 8, True, True)
+analyse_excel_ttest_MULTICOMP(excel_path + "Results_ttest_NODDI.xlsx", 8, "NODDI", ["fintra", "fextra","fiso","odi"], True, True)
+analyse_excel_ttest_MULTICOMP(excel_path + "Results_ttest_DIAMOND1.xlsx", 8, "DIAMOND1", ["wFA", "wMD","wAD","wRD"], True, True)
+analyse_excel_ttest_MULTICOMP(excel_path + "Results_ttest_DIAMOND2.xlsx", 8, "DIAMOND2", ["frac_csf", "frac_ftot"], True, True)
+analyse_excel_ttest_MULTICOMP(excel_path + "Results_ttest_MF.xlsx", 8, "MF", ["frac_csf", "frac_ftot", "fvf_tot", "wfvf"], True, True)
 
 # =============================================================================
 # THE COHERENCE OF EACH MODEL SEPARATELY
 # =============================================================================
-atlas_name_NODDI = coherence("NODDI", ["White Matter", "Subcortical", "Cerebellum"], 8, perso_path + "Results_ttest_NODDI.xlsx") 
-atlas_name_DIAMOND2 = coherence("DIAMOND2", ["White Matter", "Subcortical", "Cerebellum"], 8, perso_path + "Results_ttest_DIAMOND2.xlsx") 
-atlas_name_MF = coherence("MF", ["White Matter", "Subcortical", "Cerebellum"], 8, perso_path + "Results_ttest_MF.xlsx") 
+atlas_name_NODDI = coherence("NODDI", ["White Matter", "Subcortical", "Cerebellum"], 8, excel_path + "Results_ttest_NODDI.xlsx") 
+atlas_name_DIAMOND2 = coherence("DIAMOND2", ["White Matter", "Subcortical", "Cerebellum"], 8, excel_path + "Results_ttest_DIAMOND2.xlsx") 
+atlas_name_MF = coherence("MF", ["White Matter", "Subcortical", "Cerebellum"], 8, excel_path + "Results_ttest_MF.xlsx") 
 
 # PERCENTAGE
 gather_metrics_NODDI, gather_metrics_diff_NODDI, atlas_signifi_NODDI = coherence_plot("NODDI", atlas_name_NODDI, ["fintra", "fextra", "fiso","odi"], True, True, False)            
@@ -985,12 +1000,12 @@ gather_metrics_MF, gather_metrics_diff_MF, atlas_signifi_MF = coherence_plot("MF
 # COHERENCE COMBINED OF THE MODELS
 # =============================================================================
 # FA, wFA, ODI
-atlas_name_all_fa_odi_cfa = coherencebis("FA", ["White Matter", "Subcortical", "Cerebellum"], 8, [perso_path + "Results_ttest_DTI.xlsx", perso_path + "Results_ttest_NODDI.xlsx",perso_path + "Results_ttest_DIAMOND1.xlsx"])
+atlas_name_all_fa_odi_cfa = coherencebis("FA", ["White Matter", "Subcortical", "Cerebellum"], 8, [excel_path + "Results_ttest_DTI.xlsx", excel_path + "Results_ttest_NODDI.xlsx",excel_path + "Results_ttest_DIAMOND1.xlsx"])
 atlas_signif_corr = retirer_same(atlas_name_all_fa_odi_cfa)
-gather_metrics_FAcFAodi, gather_metrics_diff_FAcFAodi, atlas_signifi_FAcFAodi = coherence_plot("Combined", atlas_signif_corr, ["FA","odi","wFA"], False, True, False) 
+gather_metrics_FAcFAodi, gather_metrics_diff_FAcFAodi, atlas_signifi_FAcFAodi = coherence_plot("Combined", atlas_signif_corr, ["FA","odi","wFA"], False, True, True) 
 
 # FRACTION OF CSF
-atlas_name_all_CSF = coherencebis("CSF", ["White Matter", "Subcortical", "Cerebellum"], 8, [perso_path + "Results_ttest_NODDI.xlsx", perso_path + "Results_ttest_DIAMOND2.xlsx", perso_path + "Results_ttest_MF.xlsx"])
+atlas_name_all_CSF = coherencebis("CSF", ["White Matter", "Subcortical", "Cerebellum"], 8, [excel_path + "Results_ttest_NODDI.xlsx", excel_path + "Results_ttest_DIAMOND2.xlsx", excel_path + "Results_ttest_MF.xlsx"])
 atlas_signif_corr_CSF = retirer_same(atlas_name_all_CSF)
 gather_metrics_CSF, gather_metrics_diff_CSF, atlas_signifi_CSF = coherence_plot("CSF", atlas_signif_corr_CSF, ["fiso","frac_csf (DIAMOND)","frac_csf (MF)"], False, True ,False) 
 
