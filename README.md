@@ -1,7 +1,7 @@
 #Install in local 
 If you want to download the lastest version directly from GitHub, you can close this repository
 
-```CACA```
+```git clone https://github.com/mdausort/TFE22-540```
 
 
 # TFE22-540
