@@ -24,10 +24,8 @@ The different steps to follow in order to obtain our results :
 → To lauch this, use [`job_submission.py`](https://github.com/PiLAB-Medical-Imaging/TFE22-540_Alcohol/blob/main/Codes/job_submission.py) first line of **patientlist_wrapper** command only. 
   
   6) [`Corpus_callosum_reg.py`](https://github.com/PiLAB-Medical-Imaging/TFE22-540_Alcohol/blob/main/Codes/Corpus_callosum_reg.py): This is the code corresponding to the creation of our CC. 
-
-
-	![X](Images/Ancien_CC_trou.png.png)
-
+  ![Ancien_CC_trou](https://user-images.githubusercontent.com/60848397/207355987-73e02c4a-b28d-4e19-b97f-bc9222023795.png =100x20)
+  As we can see on the previous image, the downloaded Corpus Callosum was not of good quality (Fig A.) so we drew it ourselves as depicted in Fig B. and its 3D representation (Fig C.). 
 
 However, you don't need the "registration_CC_on_perfect" function and the last part of this file (MASK FA). You will only need to resubmit the `reg_CC_on_sub` if you have new patients. 
 → To lauch this, use [`job_submission.py`](https://github.com/PiLAB-Medical-Imaging/TFE22-540_Alcohol/blob/main/Codes/job_submission.py) thrid line of **patientlist_wrapper** command only. 
@@ -37,6 +35,7 @@ However, you don't need the "registration_CC_on_perfect" function and the last p
   8) [`Corpus_callosum_division.py`](https://github.com/PiLAB-Medical-Imaging/TFE22-540_Alcohol/blob/main/Codes/Corpus_callosum_division.py): Code to obtained a subdivision of the CC.
   → To lauch this, use [`job_submission.py`](https://github.com/PiLAB-Medical-Imaging/TFE22-540_Alcohol/blob/main/Codes/job_submission.py) fourth line of patientlist_wrapper command only. 
   
+
   9) [`f0_f1_to_ftot.py`](https://github.com/PiLAB-Medical-Imaging/TFE22-540_Alcohol/blob/main/Codes/f0_f1_to_ftot.py): Creation of some files for DIAMOND and MF models.
   
   10) [`FA_DMD.py`](https://github.com/PiLAB-Medical-Imaging/TFE22-540_Alcohol/blob/main/Codes/FA_DMD.py): Creation of weigthed version of the DTI metric for DIAMOND model.
