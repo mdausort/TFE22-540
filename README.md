@@ -26,7 +26,7 @@ The different steps to follow in order to obtain our results :
   6) [`Corpus_callosum_reg.py`](https://github.com/PiLAB-Medical-Imaging/TFE22-540_Alcohol/blob/main/Codes/Corpus_callosum_reg.py): This is the code corresponding to the creation of our CC. 
 
 
-	![Texte de remplacement si l’image ne se charge pas]()
+	![Texte de remplacement si l’image ne se charge pas](https://github.com/mdausort/TFE22-540/blob/main/Images/Ancien_CC_trou.png)
 
 
 However, you don't need the "registration_CC_on_perfect" function and the last part of this file (MASK FA). You will only need to resubmit the `reg_CC_on_sub` if you have new patients. 
