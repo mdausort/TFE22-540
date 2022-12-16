@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt 
 import matplotlib.patches as mpatches
 from mpl_toolkits.mplot3d import Axes3D
+
 from perso_path import perso_path_string
 
 

@@ -6,6 +6,7 @@ Created on Wed Mar  9 09:35:09 2022
 
 import os
 import numpy as np
+
 from CN2 import getTransform, applyTransform
 from atlas_modif_name import get_corr_atlas_list, get_atlas_list
 from perso_path import perso_path_string

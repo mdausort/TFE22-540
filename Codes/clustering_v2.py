@@ -1,18 +1,22 @@
-import math as m
+
 import numpy as np
 import pandas as pd
 import xlsxwriter
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+
 from sklearn.cluster import KMeans
-from scipy.spatial.distance import cdist
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 import seaborn as sns
 
-"""DATASET"""
+from perso_path import perso_path_string, patient_number_list
 
-path = "D:/EPL/MASTER/TFE/alcoolique/Analyse/Excel/"
+"""
+    DATASET
+"""
+
+perso_path, excel_path, subjects_path, patients_path, plot_path, atlas_path = perso_path_string() 
+path = excel_path
 
 # Methode par DTI :
 mean_ROI_AD = path + r'mean_ROI_AD.xlsx'
@@ -54,7 +58,9 @@ metric_name_DIAMOND = ["wFA", "wMD", "wAD", "wRD", "frac_ftot", "frac_csf"]
 metric_name_MF = ["frac_csf", "frac_ftot", "fvf_tot", "wfvf"]
 
 
-"""FONCTIONS UTILES """
+"""
+    FONCTIONS UTILES 
+"""
 
 
 def get_kmeans(all_metric, nb_cluster):

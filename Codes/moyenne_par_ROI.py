@@ -6,10 +6,11 @@ Created on Wed Mar  9 22:39:41 2022
 
 import numpy as np
 import nibabel as nib
-from atlas_modif_name import get_corr_atlas_list, get_atlas_list
 import xlsxwriter
 import time
 import math
+
+from atlas_modif_name import get_corr_atlas_list, get_atlas_list
 from perso_path import perso_path_string, patient_number_list
 
 # A better version of this code exist (see moyenne_ROI_v2.py) 

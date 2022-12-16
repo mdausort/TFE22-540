@@ -7,9 +7,10 @@ Created on Fri Apr 22 22:35:12 2022
 
 import numpy as np 
 import pandas as pd 
+import xlsxwriter
+
 from atlas_modif_name import get_atlas_list, get_corr_atlas_list
 from Stat_test import get_ttest
-import xlsxwriter
 from perso_path import perso_path_string
 
 

@@ -6,7 +6,7 @@ Created on Wed Apr 13 09:14:26 2022
 
 import numpy as np
 import nibabel as nib
-# import time
+
 from perso_path import perso_path_string
 
 

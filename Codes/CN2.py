@@ -7,7 +7,6 @@ Created on Thu Nov  4 21:11:14 2021
 
 import numpy as np
 import nibabel as nib
-# from dipy.viz import regtools
 from dipy.io.image import load_nifti
 from dipy.align.metrics import CCMetric
 from dipy.align.imwarp import SymmetricDiffeomorphicRegistration

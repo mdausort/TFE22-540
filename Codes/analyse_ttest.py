@@ -6,13 +6,13 @@ Created on Mon Apr 18 10:23:52 2022
 
 
 import numpy as np
-from atlas_modif_name import get_corr_atlas_list, get_atlas_list
-from plot_functions import histo_hori, histo_multicomp, plot_all_matter
 import pandas as pd
 import xlsxwriter
 from collections import OrderedDict
-from perso_path import perso_path_string
 
+from perso_path import perso_path_string
+from atlas_modif_name import get_corr_atlas_list, get_atlas_list
+from plot_functions import histo_hori, histo_multicomp, plot_all_matter
 
 perso_path, excel_path, subjects_path, patients_path, plot_path, atlas_path = perso_path_string() 
 

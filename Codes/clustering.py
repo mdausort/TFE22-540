@@ -6,9 +6,10 @@ Created on Thu Mar 24 14:18:48 2022
 """
 
 import numpy as np
+import pandas as pd
+
 from atlas_modif_name import get_corr_atlas_list, get_atlas_list
 from plot_functions import histo_hori, boxplot_dti, cluster_plot
-import pandas as pd
 from DTI_kmeans_clustering import get_all_metric, get_kmeans
 from ttest import get_results_ttest, get_excel_ttest_DTI, get_excel_ttest_MULTICOMP
 from perso_path import perso_path_string, patient_number_list

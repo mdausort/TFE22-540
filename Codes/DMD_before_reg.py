@@ -6,6 +6,7 @@ Created on Wed Mar 23 15:00:24 2022
 
 import numpy as np
 import nibabel as nib
+
 from CN2 import getTransform, applyTransform
 
 perso_path = "/CECI/proj/pilab/PermeableAccess/alcoolique_TnB32xGDr7h/alcoholic_study/subjects/"

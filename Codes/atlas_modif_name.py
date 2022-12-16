@@ -4,8 +4,9 @@ Created on Thu Mar 17 12:15:10 2022
 @author: Fauston
 """
 
-import numpy as np
 import os
+import numpy as np
+
 from perso_path import perso_path_string
 
 def get_atlas_list(onlywhite=False, with_CC=True):

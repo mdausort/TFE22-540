@@ -5,6 +5,7 @@ Created on Thu Apr 28 14:20:37 2022
 """
 
 import nibabel as nib
+
 from perso_path import perso_path_string, patient_number_list
 
 def f0_f1_to_ftot(folder_path, p):

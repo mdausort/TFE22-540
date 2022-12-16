@@ -5,6 +5,7 @@ Created on Fri Mar  4 09:40:49 2022
 """
 
 import numpy as np
+
 from CN2 import getTransform, applyTransform
 from perso_path import perso_path_string, patient_number_list
 

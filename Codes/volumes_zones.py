@@ -5,13 +5,13 @@ Created on Mon May 23 20:43:56 2022
 """
 
 import numpy as np 
-from atlas_modif_name import get_corr_atlas_list, get_atlas_list
 import xlsxwriter
 import nibabel as nib
 from openpyxl.utils.cell import get_column_letter
 import matplotlib.pyplot as plt
-from perso_path import perso_path_string, patient_number_list
 
+from perso_path import perso_path_string, patient_number_list
+from atlas_modif_name import get_corr_atlas_list, get_atlas_list
 perso_path, excel_path, subjects_path, patients_path, plot_path, atlas_path = perso_path_string() 
 
 patient_numbers = patient_number_list("string_nb")

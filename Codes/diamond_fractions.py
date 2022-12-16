@@ -6,6 +6,7 @@ Created on Wed Mar 23 15:00:24 2022
 
 import numpy as np
 import nibabel as nib
+
 from CN2 import getTransform, applyTransform
 from perso_path import perso_path_string, patient_number_list
 

@@ -5,9 +5,10 @@ import xlsxwriter
 import nibabel as nib
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+
 from plot_functions import histo_multicomp
 from atlas_modif_name import get_corr_atlas_list, get_atlas_list
-import matplotlib.patches as mpatches
 from perso_path import perso_path_string, patient_number_list
 
 

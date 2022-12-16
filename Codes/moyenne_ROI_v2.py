@@ -3,10 +3,11 @@ import nibabel as nib
 import os
 import numpy as np
 import math
-from perso_path import perso_path_string
-from atlas_modif_name import get_corr_atlas_list, get_atlas_list
 from itertools import repeat
 from multiprocessing import Pool, freeze_support
+
+from perso_path import perso_path_string
+from atlas_modif_name import get_corr_atlas_list, get_atlas_list
 
 def genWorkbook(metric_name, metric_data, folder_path, post_proc_folder, excel_path):
 

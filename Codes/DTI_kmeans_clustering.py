@@ -7,9 +7,10 @@ Created on Wed Mar 23 11:07:27 2022
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-from atlas_modif_name import get_corr_atlas_list, get_atlas_list
 import pandas as pd
 from sklearn.cluster import KMeans, AffinityPropagation
+
+from atlas_modif_name import get_corr_atlas_list, get_atlas_list
 from perso_path import perso_path_string
 
 

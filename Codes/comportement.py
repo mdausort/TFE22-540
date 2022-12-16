@@ -11,6 +11,7 @@ import numpy as np
 import xlsxwriter
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
+
 from perso_path import perso_path_string, patient_number_list
 
 
