@@ -6,11 +6,21 @@ Created on Fri Dec 16 11:19:19 2022
 """
 
 from setuptools import setup
+import tfe22540
+
+
+# read the contents of your README file
+from pathlib import Path
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
+
 
 setup(
     name='alcoholic_tfe22540',
-    version='0.1.0',    
-    description='A example Python package',
+    version='0.1.7',    
+    description='Framework of my master thesis on the effect of withdrawal on the white matter of alcoholic patients using dMRI data.',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/mdausort/TFE22-540',
     author='Manon Dausort',
     author_email='manon.dausort@uclouvain.be',
@@ -19,25 +29,13 @@ setup(
     install_requires=['numpy',
                       'nibabel',     
                       'xlsxwriter',
-                      'time',
-                      'math',
                       'pandas',
-                      'collections',
-                      'os',
                       'matplotlib',
                       'sklearn',
                       'seaborn',
                       'dipy',
-                      'mpl_toolkits',
-                      'elikopy',
-                      'multiprocessing',
-                      'itertools',
-                      'skimage',
-                      'sys',
+                      'scikit-image',
                       'scipy',
-                      'future',
-                      'datetime',
-                      'subprocess',
                       'openpyxl'
                       ],
 
