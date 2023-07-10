@@ -69,15 +69,19 @@ def get_FA_DIAMOND(folder_path, patient_path):
                     else:
                         FA[i,j,k] = np.sqrt(3/2)*np.sqrt(((valeurs_propres[0] - MD[i,j,k])**2 + (valeurs_propres[1] - MD[i,j,k])**2 + (valeurs_propres[2] - MD[i,j,k])**2)/(valeurs_propres[0]**2 + valeurs_propres[1]**2 + valeurs_propres[2]**2))
                     
+        MD[np.isnan(MD)] = 0
         out = nib.Nifti1Image(MD, affine = nib.load(path).affine, header = nib.load(path).header)
         out.to_filename(folder_path + "/subjects/" + patient_path + "/dMRI/microstructure/diamond/" + patient_path + "_MD_DMD_" + tenseur + ".nii.gz")
-        
+
+        AD[np.isnan(AD)] = 0
         out1 = nib.Nifti1Image(AD, affine = nib.load(path).affine, header = nib.load(path).header)
         out1.to_filename(folder_path + "/subjects/" + patient_path + "/dMRI/microstructure/diamond/" + patient_path + "_AD_DMD_" + tenseur + ".nii.gz")
-        
+
+        RD[np.isnan(RD)] = 0
         out2 = nib.Nifti1Image(RD, affine = nib.load(path).affine, header = nib.load(path).header)
         out2.to_filename(folder_path + "/subjects/" + patient_path + "/dMRI/microstructure/diamond/" + patient_path + "_RD_DMD_" + tenseur + ".nii.gz")
-        
+
+        FA[np.isnan(FA)] = 0
         out3 = nib.Nifti1Image(FA, affine = nib.load(path).affine, header = nib.load(path).header)
         out3.to_filename(folder_path + "/subjects/" + patient_path + "/dMRI/microstructure/diamond/" + patient_path + "_FA_DMD_" + tenseur + ".nii.gz")
         
