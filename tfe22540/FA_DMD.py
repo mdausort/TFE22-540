@@ -37,6 +37,7 @@ def get_FA_DIAMOND(folder_path, patient_path):
         comp = nib.load(comp).get_fdata()
 
         MD = np.zeros((comp.shape[0], comp.shape[1], comp.shape[2]))
+        print(MD.shape)
         AD = np.zeros((comp.shape[0], comp.shape[1], comp.shape[2]))
         RD = np.zeros((comp.shape[0], comp.shape[1], comp.shape[2]))
         FA = np.zeros((comp.shape[0], comp.shape[1], comp.shape[2]))
