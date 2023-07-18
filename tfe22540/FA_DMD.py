@@ -37,7 +37,6 @@ def get_FA_DIAMOND(folder_path, patient_path):
         comp = nib.load(comp).get_fdata()
 
         MD = np.zeros((comp.shape[0], comp.shape[1], comp.shape[2]))
-        print(MD.shape)
         AD = np.zeros((comp.shape[0], comp.shape[1], comp.shape[2]))
         RD = np.zeros((comp.shape[0], comp.shape[1], comp.shape[2]))
         FA = np.zeros((comp.shape[0], comp.shape[1], comp.shape[2]))
@@ -68,7 +67,6 @@ def get_FA_DIAMOND(folder_path, patient_path):
                         FA[i, j, k] = np.sqrt(3 / 2) * np.sqrt(((valeurs_propres[0] - MD[i, j, k])**2 + (valeurs_propres[1] - MD[i, j, k])**2 + (valeurs_propres[2] - MD[i, j, k])**2) / (valeurs_propres[0]**2 + valeurs_propres[1]**2 + valeurs_propres[2]**2))
 
         MD[np.isnan(MD)] = 0
-        print(MD.shape)
         out = nib.Nifti1Image(MD, affine=nib.load(path).affine, header=nib.load(path).header)
         out.to_filename(folder_path + "/subjects/" + patient_path + "/dMRI/microstructure/diamond/" + patient_path + "_MD_DMD_" + tenseur + ".nii.gz")
 
