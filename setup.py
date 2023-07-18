@@ -17,7 +17,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='alcoholic_tfe22540',
-    version='0.1.8',
+    version='0.1.9',
     description='Framework of my master thesis on the effect of withdrawal on the white matter of alcoholic patients using dMRI data.',
     long_description=long_description,
     long_description_content_type='text/markdown',
