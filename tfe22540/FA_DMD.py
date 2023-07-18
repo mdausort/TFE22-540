@@ -110,5 +110,7 @@ def get_cMetrics(folder_path, patient_path):
 
         cMetric = (nib.load(metric_t0).get_fdata() * nib.load(fraction_t0).get_fdata() + nib.load(metric_t1).get_fdata() * nib.load(fraction_t1).get_fdata()) / (nib.load(fraction_t1).get_fdata() + nib.load(fraction_t0).get_fdata())
 
+        cMetric[np.isnan(cMetric)] = 0
+
         out = nib.Nifti1Image(cMetric, affine=nib.load(metric_t0).affine, header=nib.load(metric_t0).header)
         out.to_filename(folder_path + "/subjects/" + patient_path + "/dMRI/microstructure/diamond/" + patient_path + "_w" + metric + ".nii.gz")
