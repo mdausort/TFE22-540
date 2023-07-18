@@ -17,7 +17,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='alcoholic_tfe22540',
-    version='0.1.7',    
+    version='0.1.8',
     description='Framework of my master thesis on the effect of withdrawal on the white matter of alcoholic patients using dMRI data.',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -27,7 +27,7 @@ setup(
     license='BSD 2-clause',
     packages=['tfe22540'],
     install_requires=['numpy',
-                      'nibabel',     
+                      'nibabel',
                       'xlsxwriter',
                       'pandas',
                       'matplotlib',
@@ -40,7 +40,7 @@ setup(
                       ],
 
     classifiers=[
-        'Intended Audience :: Science/Research',    
+        'Intended Audience :: Science/Research',
         'Programming Language :: Python',
     ],
 )
